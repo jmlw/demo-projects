@@ -1,0 +1,8 @@
+spring:
+  resources:
+    chain:
+      cache: false
+    cache:
+      cachecontrol:
+        no-cache: true
+      period: 0
