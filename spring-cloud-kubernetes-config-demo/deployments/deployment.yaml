@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-cloud-kubernetes-config-demo-deployment
+  labels:
+    app: spring-cloud-kubernetes-config-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-cloud-kubernetes-config-demo
+  template:
+    metadata:
+      labels:
+        app: spring-cloud-kubernetes-config-demo
+    spec:
+      containers:
+        - name: spring-cloud-kubernetes-config-demo
+          imagePullPolicy: Never
+          image: com.joshmlwood.spring-cloud-kubernetes-config-demo

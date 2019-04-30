@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: spring-cloud-kubernetes-config-demo
+  cloud:
+    kubernetes:
+      config:
+        enable-api: true
+        enabled: true
+        name: ${spring.application.name}
+        namespace: default
+      reload:
+        monitoring-config-maps: true
+        strategy: restart_context
+external:
+  config: "application.yml!"
