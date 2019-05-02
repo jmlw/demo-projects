@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: spring-cloud-kubernetes-config-demo
 data:
-  application.yml: |-
+  application.yaml: |-
     external:
-      config: "ConfigMap 1!"
+      config: "ConfigMap!"

@@ -1,3 +1,65 @@
+#apiVersion: rbac.authorization.k8s.io/v1
+#kind: Role
+#metadata:
+#  namespace: default
+#  name: spring-kubernetes-config-role
+#rules:
+#  - apiGroups: [""] # "" indicates the core API group
+#    resources: ["pods"]
+#    verbs: ["get", "watch", "list"]
+#---
+#apiVersion: rbac.authorization.k8s.io/v1beta1
+#kind: RoleBinding
+#metadata:
+#  name: spring-kubernetes-config-binding
+#  namespace: default
+#subjects:
+#  - kind: ServiceAccount
+#    name: spring-kubernetes-config-service-account
+#    namespace: default
+#roleRef:
+#  kind: Role
+#  name: spring-kubernetes-config-role
+#  apiGroup: rbac.authorization.k8s.io
+#
+#---
+#apiVersion: v1
+#kind: ServiceAccount
+#metadata:
+#  name: spring-kubernetes-config-service-account
+#  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-read-role
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - endpoints
+      - pods
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-read-rolebinding
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: cluster-read-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,7 +76,23 @@ spec:
       labels:
         app: spring-cloud-kubernetes-config-demo
     spec:
+#      serviceAccountName: spring-kubernetes-config-service-account
       containers:
         - name: spring-cloud-kubernetes-config-demo
-          imagePullPolicy: Never
           image: com.joshmlwood.spring-cloud-kubernetes-config-demo
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: spring-cloud-kubernetes-config-demo
+spec:
+  selector:
+    app: spring-cloud-kubernetes-config-demo
+  ports:
+    - protocol: TCP
+      port: 8080
+      nodePort: 30000
+  type: NodePort

@@ -10,6 +10,10 @@ spring:
         namespace: default
       reload:
         monitoring-config-maps: true
-        strategy: restart_context
+        enabled: true
+        strategy: refresh
 external:
   config: "application.yml!"
+logging:
+  level:
+    org.springframework: DEBUG
