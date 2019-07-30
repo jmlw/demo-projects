@@ -1,8 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+#  matches the spring app name as defined in application.yml
   name: spring-cloud-kubernetes-config-demo
 data:
+#  must be named 'application.yaml' or be the only key in this config
+#  refer to Spring Cloud Kubernetes Config documentation or source code
   application.yaml: |-
-    external:
-      config: "ConfigMap!"
+    app:
+      config: "Configuration from Kubernetes!"

@@ -1,85 +1,56 @@
-#apiVersion: rbac.authorization.k8s.io/v1
-#kind: Role
-#metadata:
-#  namespace: default
-#  name: spring-kubernetes-config-role
-#rules:
-#  - apiGroups: [""] # "" indicates the core API group
-#    resources: ["pods"]
-#    verbs: ["get", "watch", "list"]
-#---
-#apiVersion: rbac.authorization.k8s.io/v1beta1
-#kind: RoleBinding
-#metadata:
-#  name: spring-kubernetes-config-binding
-#  namespace: default
-#subjects:
-#  - kind: ServiceAccount
-#    name: spring-kubernetes-config-service-account
-#    namespace: default
-#roleRef:
-#  kind: Role
-#  name: spring-kubernetes-config-role
-#  apiGroup: rbac.authorization.k8s.io
-#
-#---
-#apiVersion: v1
-#kind: ServiceAccount
-#metadata:
-#  name: spring-kubernetes-config-service-account
-#  namespace: default
----
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
-  name: cluster-read-role
+  namespace: default
+  name: demo-role
 rules:
-  - apiGroups:
-      - ""
-    resources:
-      - endpoints
-      - pods
-      - services
-    verbs:
-      - get
-      - list
-      - watch
+  - apiGroups: [""] # "" indicates the core API group
+    resources: ["pods", "configmaps"]
+    verbs: ["get", "watch", "list"]
 
 ---
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
 metadata:
-  name: cluster-read-rolebinding
+  name: demo-role-binding
+  namespace: default
 subjects:
   - kind: ServiceAccount
-    name: default
+    name: demo-service-account
     namespace: default
 roleRef:
-  kind: ClusterRole
-  name: cluster-read-role
+  kind: Role
+  name: demo-role
   apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: demo-service-account
+  namespace: default
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-cloud-kubernetes-config-demo-deployment
+  name: demo-deployment
   labels:
-    app: spring-cloud-kubernetes-config-demo
+    app: demo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: spring-cloud-kubernetes-config-demo
+      app: demo
   template:
     metadata:
       labels:
-        app: spring-cloud-kubernetes-config-demo
+        app: demo
     spec:
-#      serviceAccountName: spring-kubernetes-config-service-account
+      serviceAccountName: demo-service-account
       containers:
         - name: spring-cloud-kubernetes-config-demo
-          image: com.joshmlwood.spring-cloud-kubernetes-config-demo
+          image: jmlw/spring-cloud-kubernetes-config-demo
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
@@ -87,12 +58,13 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: spring-cloud-kubernetes-config-demo
+  name: demo
 spec:
   selector:
-    app: spring-cloud-kubernetes-config-demo
+    app: demo
   ports:
     - protocol: TCP
       port: 8080
       nodePort: 30000
+      name: http
   type: NodePort
