@@ -10,26 +10,23 @@
     </parent>
     <groupId>com.joshmlwood</groupId>
     <artifactId>spring-cloud-kubernetes-config-demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>spring-cloud-kubernetes-config-demo</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
+        <dockerhub.username>jmlw</dockerhub.username>
         <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-kubernetes-config</artifactId>
+            <artifactId>spring-cloud-kubernetes-config</artifactId>
         </dependency>
 
         <dependency>
@@ -44,7 +41,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Greenwich.RELEASE</version>
+                <version>Greenwich.SR2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -61,8 +58,34 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>1.4.9</version>
+                <executions>
+                    <execution>
+                        <id>tag-latest</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>tag</goal>
+                            <goal>push</goal>
+                        </goals>
+                        <configuration>
+                            <tag>latest</tag>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>tag-version</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>tag</goal>
+                            <goal>push</goal>
+                        </goals>
+                        <configuration>
+                            <tag>${project.version}</tag>
+                        </configuration>
+                    </execution>
+                </executions>
                 <configuration>
-                    <repository>${project.groupId}.${project.artifactId}</repository>
+                    <repository>${dockerhub.username}/${project.artifactId}</repository>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
