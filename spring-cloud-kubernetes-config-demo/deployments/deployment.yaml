@@ -54,6 +54,12 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
+          env:
+            - name: ENVIRONMENT_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: environment-variable-config
+                  key: ENVIRONMENT_CONFIG
 ---
 kind: Service
 apiVersion: v1

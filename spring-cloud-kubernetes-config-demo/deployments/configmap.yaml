@@ -8,4 +8,12 @@ data:
 #  refer to Spring Cloud Kubernetes Config documentation or source code
   application.yaml: |-
     app:
-      config: "Configuration from Kubernetes!"
+      config: Configuration from Kubernetes!
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: environment-variable-config
+data:
+  ENVIRONMENT_CONFIG: Configuration from Docker environment in Kubernetes!

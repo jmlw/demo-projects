@@ -16,4 +16,5 @@ spring:
 #        mode: polling
 #        period: 1000ms
 app:
-  config: "Default value"
+  config: Default value
+  environmentVariable: ${ENVIRONMENT_CONFIG:Default value}
