@@ -3,7 +3,7 @@
 Minimal setup to demonstrate using the Spring Cloud Kubernetes Config dependency to facilitate external configuration from Kubernetes ConfigMap or Secret api objects.
 
 ## Setup
-First, ensure you have Minikube or a Kuberentes cluster available to test with and you are familiar with accessing applications via an exposed node port within Kubernetes. Refer to the [official documentation on configuring a pod with cofigmaps](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/) for additional information including [how to set up minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/) or use an alternative.
+First, ensure you have Minikube or a Kubernetes cluster available to test with and you are familiar with accessing applications via an exposed node port within Kubernetes. Refer to the [official documentation on configuring a pod with cofigmaps](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/) for additional information including [how to set up minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/) or use an alternative.
 
 Also ensure you have Maven and Java 8 installed. Some tweaks to dependencies may be required for Java 9+ since `java.xml.bind ` was removed in later versions of Java.
 
