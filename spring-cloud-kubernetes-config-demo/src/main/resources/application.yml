@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: spring-cloud-kubernetes-config-demo
+#  cloud:
+#    kubernetes:
+#      config:
+#        enable-api: true
+#        enabled: true
+#        name: spring-cloud-kubernetes-config-demo
+#        name: ${spring.application.name}
+#        namespace: default
+#      reload:
+#        monitoring-config-maps: true
+#        enabled: true
+#        strategy: refresh
+#        mode: polling
+#        period: 1000ms
+app:
+  config: Default value
+  environmentVariable: ${ENVIRONMENT_CONFIG:Default value}
