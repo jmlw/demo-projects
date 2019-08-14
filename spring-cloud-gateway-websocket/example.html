@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet"/>
+  <style>
+    body {
+      background-color: #f5f5f5;
+    }
+
+    #main-content {
+      max-width: 940px;
+      padding: 2em 3em;
+      margin: 0 auto 20px;
+      background-color: #fff;
+      border: 1px solid #e5e5e5;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+  <script>
+    var stompClient = null;
+
+    function setConnected(connected) {
+      $("#connect").prop("disabled", connected);
+      $("#disconnect").prop("disabled", !connected);
+      if (connected) {
+        $("#responses").show();
+      } else {
+        $("#responses").hide();
+      }
+      $("#messages").html("");
+    }
+
+    function frameHandler(frame) {
+      setConnected(true);
+      console.log('Connected: ' + frame);
+      stompClient.subscribe('/topic/outgoing', function (message) {
+        showMessage(message.body);
+      });
+    }
+
+    function onSocketClose() {
+      if (stompClient !== null) {
+        stompClient.disconnect();
+      }
+      setConnected(false);
+      console.log("Socket was closed. Setting connected to false!")
+    }
+
+    function connect() {
+      var socket = new SockJS('http://localhost:8080/websocket');
+      stompClient = Stomp.over(socket);
+      stompClient.connect({}, function (frame) {
+        frameHandler(frame)
+      });
+      socket.onclose = function () {
+        onSocketClose();
+      }
+    }
+
+    function disconnect() {
+      if (stompClient !== null) {
+        stompClient.disconnect();
+      }
+      setConnected(false);
+      console.log("Disconnected");
+    }
+
+    function sendMessage() {
+      stompClient.send("/app/incoming", {}, JSON.stringify({'message': $("#message").val()}));
+    }
+
+    function showMessage(message) {
+      $("#responses").prepend("<tr><td>" + new Date() + "  -  " + message + "</td></tr>");
+    }
+
+    function reqListener() {
+      console.log(this.responseText);
+    }
+
+    $(function () {
+      $("form").on('submit', function (e) {
+        e.preventDefault();
+      });
+      $("#connect").click(function () {
+        connect();
+      });
+      $("#disconnect").click(function () {
+        disconnect();
+      });
+      $("#send").click(function () {
+        sendMessage();
+      });
+      $("document").ready(function () {
+        disconnect();
+      });
+    });
+  </script>
+</head>
+<body>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+  enabled. Please enable
+  Javascript and reload this page!</h2></noscript>
+<div class="container" id="main-content">
+  <div class="row">
+    <div class="col-md-6">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="connect">WebSocket connection:</label>
+          <button class="btn btn-default" id="connect" type="submit">Connect</button>
+          <button class="btn btn-default" disabled="disabled" id="disconnect" type="submit">Disconnect
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="message">Message:</label>
+          <input class="form-control" id="message" placeholder="Your message here..." type="text">
+        </div>
+        <button class="btn btn-default" id="send" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped" id="responses">
+        <thead>
+        <tr>
+          <th>Messages</th>
+        </tr>
+        </thead>
+        <tbody id="messages">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>
