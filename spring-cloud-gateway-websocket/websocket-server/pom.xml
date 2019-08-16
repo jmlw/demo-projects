@@ -38,10 +38,15 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
         <!-- Reactive support for Broker Relay -->
+        <!-- Include either starter-reactor-netty or starter-webflux -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-reactor-netty</artifactId>
         </dependency>
+        <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency> -->
 
         <!-- Actuator -->
         <dependency>

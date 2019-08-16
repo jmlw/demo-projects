@@ -22,13 +22,13 @@ services:
     environment:
       - EUREKA_URI=http://eureka:8761/eureka
 
-  server-app1:
+  websocket-server-1:
     build: ./websocket-server
     environment:
       - EUREKA_URI=http://eureka:8761/eureka
       - BROKER_RELAY_HOST=rabbitmq
 
-  server-app2:
+  websocket-server-2:
     build: ./websocket-server
     environment:
       - EUREKA_URI=http://eureka:8761/eureka
