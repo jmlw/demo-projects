@@ -10,7 +10,7 @@
     </parent>
     <artifactId>websocket-gateway-demo-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>websocket-gateway-demo-server</name>
+    <name>websocket-server</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -36,11 +36,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-        <!-- Reactive support for Broker Relay -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-reactor-netty</artifactId>
         </dependency>
 
         <!-- Actuator -->

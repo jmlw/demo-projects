@@ -10,7 +10,7 @@
     </parent>
     <artifactId>websocket-gateway-demo-eureka</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>websocket-gateway-demo-eureka</name>
+    <name>eureka</name>
 
     <properties>
         <java.version>1.8</java.version>
