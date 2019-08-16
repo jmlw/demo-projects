@@ -2,7 +2,7 @@
 
 This project represents a bare-bones example of how to set up a load balanced websocket server utilizing Spring Boot Starter Websocket, and Spring Cloud Gateway, as well as a Message Broker to facilitate messages between multiple server instances.
 
-The project uses Spring Cloud Netflix Eureka for service discovery, however it is possible to manually specify a hostname and port in `RouteLocationConfiguration.java` rather than the service name for routing HTTP and Websocket requests through the gateway. Specifying instances by host and port like this however may preclude you from being able to effectively loadbalance requests.
+The project uses Eureka for service discovery, however it is possible to manually specify a hostname and port in `RouteLocationConfiguration.java` rather than the service name for routing HTTP and Websocket requests through the gateway. Specifying instances by host and port like this however may preclude you from being able to effectively loadbalance requests.
 
 The provided message broker is RabbitMQ, however it's possible to swap out the RabbitMQ server for the provided ActiveMQ server.
 
