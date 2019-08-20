@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableDiscoveryClient
 @SpringBootApplication
-public class ServerApplication {
+public class WebsocketServerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
