@@ -1,6 +1,6 @@
 spring:
   application:
-    name: websocket-websocketserver
+    name: websocket-server
 eureka:
   client:
     serviceUrl:

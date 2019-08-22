@@ -19,7 +19,7 @@ public class WebsocketController {
     private static final Random RANDOM = new Random();
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    @Value("${websocketserver.port}")
+    @Value("${server.port}")
     private String port;
 
     @Autowired

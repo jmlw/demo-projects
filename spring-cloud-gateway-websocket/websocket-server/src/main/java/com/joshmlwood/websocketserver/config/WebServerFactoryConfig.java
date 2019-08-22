@@ -8,15 +8,15 @@ import org.springframework.util.SocketUtils;
 
 @Configuration
 public class WebServerFactoryConfig implements WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> {
-    @Value("${websocketserver.min-port:8080}")
+    @Value("${server.min-port:8080}")
     private Integer minPort;
-    @Value("${websocketserver.max-port:9080}")
+    @Value("${server.max-port:9080}")
     private Integer maxPort;
 
     @Override
     public void customize(ConfigurableServletWebServerFactory factory) {
         int port = SocketUtils.findAvailableTcpPort(minPort, maxPort);
         factory.setPort(port);
-        System.getProperties().put("websocketserver.port", port);
+        System.getProperties().put("server.port", port);
     }
 }

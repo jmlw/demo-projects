@@ -12,7 +12,7 @@ public class RouteLocatorConfiguration {
         return builder.routes()
             .route(p -> p
                 .path("/websocket/**")
-                .uri("lb://websocket-websocketserver/websocket")
+                .uri("lb://websocket-server/websocket")
             )
             .build();
     }
