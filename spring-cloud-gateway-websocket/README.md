@@ -33,7 +33,7 @@ During startup be patient as eureka attempts to resolve location and port, as we
 I've added a timed method to respond to the same websocket topic which the client is subscribed to to simulate push notifications from the server, either in response to a system action or in response to another user's action.
 
 ### Demonstration of the project running
-![Websocket demonstration](https://github.com/{jmlw}/{websocket-spring-gateway-demo}/raw/master/ws-demo-1.gif)
+![Websocket demonstration](https://github.com/jmlw/demo-projects/blob/master/spring-cloud-gateway-websocket/ws-demo-1.gif?raw=true)
 
 ### Demonstration with second user in another window
-![Websocket demonstration with second user](https://github.com/{jmlw}/{websocket-spring-gateway-demo}/raw/master/ws-demo-2.gif)
+![Websocket demonstration with second user](https://github.com/jmlw/demo-projects/blob/master/spring-cloud-gateway-websocket/ws-demo-2.gif?raw=true)
