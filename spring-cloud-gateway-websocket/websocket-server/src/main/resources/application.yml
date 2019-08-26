@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: websocket-server
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    healthcheck:
+      enabled: true
+  instance:
+    prefer-ip-address: true
+broker:
+  relay:
+    host: ${BROKER_HOST:localhost}

@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  rabbitmq:
+    build: rabbitmq
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - '15672:15672'
+    volumes:
+      - 'rabbitmq_data:/bitnami'
+
+  eureka:
+    build: ./eureka
+    ports:
+      - '8761:8761'
+
+  gateway:
+    build: ./gateway
+    ports:
+      - '8080:8080'
+    depends_on:
+      - eureka
+    environment:
+      - EUREKA_URI=http://eureka:8761/eureka
+
+  websocket-server-1:
+    build: ./websocket-server
+    depends_on:
+      - eureka
+      - rabbitmq
+    environment:
+      - EUREKA_URI=http://eureka:8761/eureka
+      - BROKER_RELAY_HOST=rabbitmq
+
+  websocket-server-2:
+    build: ./websocket-server
+    depends_on:
+      - eureka
+      - rabbitmq
+    environment:
+      - EUREKA_URI=http://eureka:8761/eureka
+      - BROKER_RELAY_HOST=rabbitmq
+
+volumes:
+  rabbitmq_data:
+    driver: local
