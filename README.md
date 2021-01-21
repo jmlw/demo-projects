@@ -1,5 +1,5 @@
 # Demo Projects
-This repository is intended to host all demo projects that are referenced on my [blog](https://blog.joshmlwood.com).
+This repository is intended to host all demo projects that are referenced on my [blog](https://www.joshmlwood.com).
 
 ### Projects
 | Project Name | Description |
